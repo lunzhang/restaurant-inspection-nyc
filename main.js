@@ -14,6 +14,20 @@ chrome.storage.local.get(['restaurants'], function(result) {
   buildRestaurantList(savedRestaurants, $('#saved-restaurant-list'));
 });
 
-$.ajax({url: "https://data.cityofnewyork.us/resource/9w7m-hzhe.json?dba=SOPHIE'S CUBAN CUISINE", success: function(result){
-  console.log(result);
-}});
+
+const handle = function (data) {
+  console.log(data);
+};
+
+const search = function (term) {
+  const businessName = term.toUpperCase();
+  const socrataQuery = `boro=MANHATTAN&$where=DBA%20like%20%27%25${businessName}%25%27`;
+  $.ajax({
+    url: `https://data.cityofnewyork.us/resource/9w7m-hzhe.json?${socrataQuery}`,
+    success: function (result) {
+      handle(result);
+    }
+  });
+};
+
+search("sophie");
