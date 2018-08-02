@@ -18,7 +18,7 @@ const sortViolations = (a, b) => {
 }
 
 const extractAddress = (violation) => {
-  return '';
+  return `${violation.building} ${violation.street} ${violation.boro}, ${violation.zipcode}`;
 };
 
 const search = (term) => {
