@@ -7,3 +7,11 @@
 #restaurant-list {
   height: 300px;
 }
+
+nav {
+  margin-bottom: 15px;
+}
+
+input {
+  margin-right: 10px;
+}
