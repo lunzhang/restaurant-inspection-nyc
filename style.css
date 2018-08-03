@@ -63,3 +63,10 @@ input {
 .collapse {
   background-color: #f7f7f7;
 }
+
+tbody > tr {
+  cursor: pointer;
+}
+tbody > tr:hover {
+  background-color: #e0f5ff;
+}
