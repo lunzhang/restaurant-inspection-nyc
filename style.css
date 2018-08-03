@@ -59,3 +59,7 @@ input {
     -moz-border-radius: 0px;
     background-image: none;
 }
+
+.collapse {
+  background-color: #f7f7f7;
+}

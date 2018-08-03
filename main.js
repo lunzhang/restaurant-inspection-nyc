@@ -22,32 +22,41 @@ $(document).ready(() => {
 
   const gradePoints = function (points) {
     if (points <= 13)
-      return "A";
+      return 'Estimated A';
     else if (points <= 27)
-      return "B";
+      return 'Estimated B';
     else if (points > 27)
-      return "C";
+      return 'Estimated C';
     else
-      return "Not Found";
+      return 'N/A';
   };
 
   const buildRestaurantList = (restaurant, element) => {
     const saveMode = element.attr('id') === 'saved-restaurant-list';
     const btnText = saveMode ? 'Delete' : 'Save';
     const btnClick = saveMode ? removeRestaurant : saveRestaurant;
-    element.append(`
-      <tr id=${restaurant.camis}>
+    element.append(
+      `<tr data-toggle="collapse" data-target=".${btnText + restaurant.camis}" id=${restaurant.camis}>
         <td scope="row"> ${restaurant.dba} </td>
         <td> ${restaurant.address} </td>
         <td> ${restaurant.inspection_date} </td>
-        <td> ${["A", "B", "C"].indexOf(restaurant.grade) != -1  ? restaurant.grade :
-      "Either ungraded or grade pending. Based on violation points, would be " + gradePoints(restaurant.score)} 
-        </td>
-        <td> ${restaurant.score >= 0 ? restaurant.score : "N/A"} </td>
+        <td> ${restaurant.grade ? restaurant.grade : gradePoints(restaurant.score)} </td>
+        <td> ${restaurant.score ? restaurant.score : 'N/A'} </td>
         <td> <button type="button" class="btn btn-primary btn-sm"> ${btnText} </button> </td>
       </tr>`
     );
-    element.find(`#${restaurant.camis}`).bind('click', () => {
+    restaurant.violations.forEach(violation => {
+      element.append(
+        `<tr class="collapse ${btnText + restaurant.camis}" data-toggle="collapse" data-target=".violation${violation.camis}">
+          <td scope="row" colspan="2"> ${violation.violation_description} </td>
+          <td> ${violation.inspection_date.slice(0, violation.inspection_date.indexOf('T'))} </td>
+          <td> ${violation.grade ? violation.grade : gradePoints(violation.score)} </td>
+          <td> ${violation.score ? violation.score : 'N/A'} </td>
+        </tr>`
+      );
+    });
+    console.log(restaurant)
+    element.find(`#${restaurant.camis} button`).bind('click', () => {
       btnClick(restaurant);
     });
   };
