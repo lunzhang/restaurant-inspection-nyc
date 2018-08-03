@@ -32,7 +32,7 @@ $(document).ready(() => {
     $restaurantList.empty();
     const term = $input.val();
     $.ajax({
-      url: `https://data.cityofnewyork.us/resource/9w7m-hzhe.json?$where=DBA%20like%20%27%25${term.toUpperCase()}%25%27`,
+      url: `https://data.cityofnewyork.us/resource/9w7m-hzhe.json?$where=DBA%20like%20%22%25${term.toUpperCase()}%25%22`,
       success: function (violations) {
         violations.sort(sortViolations);
         const restaurants = {};
