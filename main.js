@@ -20,6 +20,17 @@ $(document).ready(() => {
     chrome.storage.local.set({'restaurants': savedRestaurants});
   };
 
+  const gradePoints = function (points) {
+    if (points <= 13)
+      return "A";
+    else if (points <= 27)
+      return "B";
+    else if (points > 27)
+      return "C";
+    else
+      return "Ungraded";
+  };
+
   const buildRestaurantList = (restaurant, element) => {
     const saveMode = element.attr('id') === 'saved-restaurant-list';
     const btnText = saveMode ? 'Delete' : 'Save';
@@ -29,7 +40,10 @@ $(document).ready(() => {
         <td scope="row"> ${restaurant.dba} </td>
         <td> ${restaurant.address} </td>
         <td> ${restaurant.inspection_date} </td>
-        <td> ${restaurant.grade} </td>
+        <td> ${["A", "B", "C"].indexOf(restaurant.grade) != -1  ? restaurant.grade :
+      "Either ungraded or grade pending. Based on violation points, would be " + gradePoints(restaurant.score) + ")"} 
+        </td>
+        <td> ${restaurant.score} </td>
         <td> <button type="button" class="btn btn-primary btn-sm"> ${btnText} </button> </td>
       </tr>`
     );
@@ -72,6 +86,7 @@ $(document).ready(() => {
               inspection_date: violation.inspection_date.slice(0, violation.inspection_date.indexOf('T')),
               phone: violation.phone,
               grade: violation.grade,
+              score: violation.score,
               violations: [violation]
             };
           }
@@ -101,6 +116,7 @@ $(document).ready(() => {
             inspection_date: latestViolation.inspection_date.slice(0, latestViolation.inspection_date.indexOf('T')),
             phone: latestViolation.phone,
             grade: latestViolation.grade,
+            score: latestViolation.score
           };
           buildRestaurantList(restaurant, $savedRestaurantList);
         }
