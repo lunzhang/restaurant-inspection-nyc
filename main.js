@@ -142,9 +142,14 @@ $(document).ready(() => {
   };
 
   $(function () {
-    $("#restaurant-das").autocomplete({
+    $input.autocomplete({
       source: Object.keys(nameMap),
-      delay: 0
+      delay: 0,
+      focus: function (event, ui) {
+        $(".ui-helper-hidden-accessible").hide();
+        event.preventDefault();
+      }
+      // , select: search
     });
   });
 
