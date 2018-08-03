@@ -23,7 +23,7 @@ $(document).ready(() => {
 
   const gradePoints = function (points) {
     if (points <= 13)
-      return 'Not Graded. Estimated A';
+      return 'Estimated A';
     else if (points <= 27)
       return 'Estimated B';
     else if (points > 27)
