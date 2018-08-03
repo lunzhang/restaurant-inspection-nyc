@@ -16,6 +16,7 @@ $(document).ready(() => {
   const removeRestaurant = (restaurant) => {
     const restaurantId = restaurant.camis;
     $savedRestaurantList.find(`#${restaurantId}`).remove();
+    $savedRestaurantList.find(`.Delete${restaurantId}`).remove();
     savedRestaurants.splice(savedRestaurants.indexOf(restaurantId), 1);
     chrome.storage.local.set({'restaurants': savedRestaurants});
   };
@@ -42,7 +43,7 @@ $(document).ready(() => {
         <td> ${restaurant.inspection_date} </td>
         <td> ${restaurant.grade ? restaurant.grade : gradePoints(restaurant.score)} </td>
         <td> ${restaurant.score ? restaurant.score : 'N/A'} </td>
-        <td> <button type="button" class="btn btn-primary btn-sm"> ${btnText} </button> </td>
+        <td> <button type="button" class="btn ${saveMode ? 'btn-danger' : 'btn-primary'} btn-sm"> ${btnText} </button> </td>
       </tr>`
     );
     restaurant.violations.forEach(violation => {
@@ -55,8 +56,8 @@ $(document).ready(() => {
         </tr>`
       );
     });
-    console.log(restaurant)
-    element.find(`#${restaurant.camis} button`).bind('click', () => {
+    element.find(`#${restaurant.camis} button`).bind('click', (e) => {
+      e.stopPropagation();
       btnClick(restaurant);
     });
   };
@@ -191,6 +192,10 @@ $(document).ready(() => {
     $input.autocomplete({
       source: Object.keys(nameMap),
       delay: 0,
+      messages: {
+        noResults: '',
+        results: function() {}
+      },
       focus: function (event, ui) {
         $(".ui-helper-hidden-accessible").hide();
         event.preventDefault();
