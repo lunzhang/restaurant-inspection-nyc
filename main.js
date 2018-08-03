@@ -49,7 +49,7 @@ $(document).ready(() => {
     restaurant.violations.forEach(violation => {
       element.append(
         `<tr class="collapse ${btnText + restaurant.camis}" data-toggle="collapse" data-target=".${btnText + restaurant.camis}">
-          <td scope="row" colspan="2"> ${violation.violation_description} </td>
+          <td scope="row" colspan="2"> ${violation.violation_description ? violation.violation_description : 'no violation :)'} </td>
           <td> ${violation.inspection_date.slice(0, violation.inspection_date.indexOf('T'))} </td>
           <td> ${violation.grade ? violation.grade : gradePoints(violation.score)} </td>
           <td> ${violation.score ? violation.score : 'N/A'} </td>
