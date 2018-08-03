@@ -1,11 +1,13 @@
 #restaurant-inspection {
-  width: 300px;
+  font-size: 12px;
+  width: 500px;
   padding: 10px;
   text-align: center;
+  overflow: scroll;
 }
 
 #restaurant-list {
-  height: 300px;
+  height: 500px;
 }
 
 nav {
@@ -14,4 +16,8 @@ nav {
 
 input {
   margin-right: 10px;
+}
+
+.table {
+  margin-top: 10px;
 }
