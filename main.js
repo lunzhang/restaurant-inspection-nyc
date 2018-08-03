@@ -4,16 +4,38 @@ $(document).ready(() => {
   const $searchBtn = $('#search-btn');
   const $restaurantList = $('#restaurant-list');
   const $savedRestaurantList = $('#saved-restaurant-list');
+  
+  const saveRestaurant = (restaurant) => {
+    if (savedRestaurants.indexOf(restaurant.camis) === -1) {
+      savedRestaurants.push(restaurant.camis);
+      buildRestaurantList(restaurant, $savedRestaurantList);
+      chrome.storage.local.set({'restaurants': savedRestaurants});
+    }
+  };
+
+  const removeRestaurant = (restaurant) => {
+    const restaurantId = restaurant.camis;
+    $savedRestaurantList.find(`#${restaurantId}`).remove();
+    savedRestaurants.splice(savedRestaurants.indexOf(restaurantId), 1);
+    chrome.storage.local.set({'restaurants': savedRestaurants});
+  };
 
   const buildRestaurantList = (restaurant, element) => {
+    const saveMode = element.attr('id') === 'saved-restaurant-list';
+    const btnText = saveMode ? 'Delete' : 'Save';
+    const btnClick = saveMode ? removeRestaurant : saveRestaurant;
     element.append(`
-      <tr>
+      <tr id=${restaurant.camis}>
         <td scope="row"> ${restaurant.dba} </td>
         <td> ${restaurant.address} </td>
         <td> ${restaurant.inspection_date} </td>
         <td> ${restaurant.grade} </td>
+        <td> <button type="button" class="btn btn-primary btn-sm"> ${btnText} </button> </td>
       </tr>`
     );
+    element.find(`#${restaurant.camis}`).bind('click', () => {
+      btnClick(restaurant);
+    });
   };
 
   const sortViolations = (a, b) => {
@@ -63,7 +85,7 @@ $(document).ready(() => {
   };
 
   chrome.storage.local.get(['restaurants'], function (result) {
-    savedRestaurants = result.key ? result.key : [41541793];
+    savedRestaurants = result.restaurants ? result.restaurants : [];
     savedRestaurants.forEach(id => {
       $.ajax({
         url: `https://data.cityofnewyork.us/resource/9w7m-hzhe.json?camis=${id}`,
@@ -86,7 +108,6 @@ $(document).ready(() => {
     });
   });
   $searchBtn.bind('click', search);
-
 
   const nameMap = {
     "21 Homes Kitchen": 41398041,
@@ -155,5 +176,4 @@ $(document).ready(() => {
       }
     });
   });
-
 });
