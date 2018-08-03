@@ -41,7 +41,7 @@ $(document).ready(() => {
         <td> ${restaurant.address} </td>
         <td> ${restaurant.inspection_date} </td>
         <td> ${["A", "B", "C"].indexOf(restaurant.grade) != -1  ? restaurant.grade :
-      "Either ungraded or grade pending. Based on violation points, would be " + gradePoints(restaurant.score) + ")"} 
+      "Either ungraded or grade pending. Based on violation points, would be " + gradePoints(restaurant.score)} 
         </td>
         <td> ${restaurant.score} </td>
         <td> <button type="button" class="btn btn-primary btn-sm"> ${btnText} </button> </td>
