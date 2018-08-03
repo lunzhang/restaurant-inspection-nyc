@@ -41,7 +41,7 @@ $(document).ready(() => {
         <td scope="row"> ${restaurant.dba} </td>
         <td> ${restaurant.address} </td>
         <td> ${restaurant.inspection_date} </td>
-        <td> ${["A", "B", "C"].indexOf(restaurant.grade) != -1 ? restaurant.grade : "Not Graded. " + gradePoints(restaurant.score)}</td>
+        <td> ${["A", "B", "C"].indexOf(restaurant.grade) != -1 ? restaurant.grade : "Not Graded. " + gradePoints(restaurant.score)} </td>
         <td> ${restaurant.score ? restaurant.score : 'N/A'} </td>
         <td> <button type="button" class="btn ${saveMode ? 'btn-danger' : 'btn-primary'} btn-sm"> ${btnText} </button> </td>
       </tr>`
@@ -205,10 +205,5 @@ $(document).ready(() => {
         search();
       }
     });
-  });
-  $input.keyup(function(event) {
-    if (event.keyCode === 13) {
-      $searchBtn.click();
-    }
   });
 });
