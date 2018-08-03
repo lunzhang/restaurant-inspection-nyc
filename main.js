@@ -31,8 +31,10 @@ $(document).ready(() => {
   const search = () => {
     $restaurantList.empty();
     const term = $input.val();
+    const query = nameMap[term] == null ? `$where=DBA%20like%20%22%25${term.toUpperCase()}%25%22`
+      : `camis=${nameMap[term]}`;
     $.ajax({
-      url: `https://data.cityofnewyork.us/resource/9w7m-hzhe.json?$where=DBA%20like%20%22%25${term.toUpperCase()}%25%22`,
+      url: `https://data.cityofnewyork.us/resource/9w7m-hzhe.json?${query}`,
       success: function (violations) {
         violations.sort(sortViolations);
         const restaurants = {};
@@ -89,7 +91,7 @@ $(document).ready(() => {
   const nameMap = {
     "21 Homes Kitchen": 41398041,
     "Abace Sushi": 50006214,
-    "Aki Sushi": null,
+    // "Aki Sushi": null,
     "Al Horno Lean Mexican (47th St)": 50010032,
     "At Nine Thai": 50076881,
     "Balade Your Way": 50047762,
@@ -109,14 +111,14 @@ $(document).ready(() => {
     "Hale & Hearty Soups": 40959649,
     "Happy Family Chinese and Japanese Restaurant": 41340002,
     "Hestia": 50009921,
-    "Hudson Market": null,
+    // "Hudson Market": null,
     "Hummus & Pita Co.": 50016104,
     "Indikitch": 50005876,
     "Jerusalem Cafe": 41643561,
     "Joy Curry & Tandoor": 41666656,
     "Just Salad": 41235038,
     "Kati Roll Company": 41272891,
-    "Kofoo": null,
+    // "Kofoo": null,
     "Kosher Deluxe": 40825868,
     "Lenwich": 50049229,
     "Let's Poke": 50075055,
@@ -129,7 +131,7 @@ $(document).ready(() => {
     "Pinkberry - Hell's Kitchen": 50049034,
     "Pokechan": 50057872,
     "Piccolo Cafe": 41538666,
-    "Pulled & Chopped BBQ": null,
+    // "Pulled & Chopped BBQ": null,
     "Riko Peruvian": 50051650,
     "Room Service": 50015344,
     "Sophie's Cuban": 50055346,
