@@ -28,7 +28,7 @@ $(document).ready(() => {
     else if (points > 27)
       return "C";
     else
-      return "Ungraded";
+      return "Not Found";
   };
 
   const buildRestaurantList = (restaurant, element) => {
@@ -43,7 +43,7 @@ $(document).ready(() => {
         <td> ${["A", "B", "C"].indexOf(restaurant.grade) != -1  ? restaurant.grade :
       "Either ungraded or grade pending. Based on violation points, would be " + gradePoints(restaurant.score)} 
         </td>
-        <td> ${restaurant.score} </td>
+        <td> ${restaurant.score >= 0 ? restaurant.score : "N/A"} </td>
         <td> <button type="button" class="btn btn-primary btn-sm"> ${btnText} </button> </td>
       </tr>`
     );
