@@ -4,7 +4,7 @@ $(document).ready(() => {
   const $searchBtn = $('#search-btn');
   const $restaurantList = $('#restaurant-list');
   const $savedRestaurantList = $('#saved-restaurant-list');
-  
+
   const saveRestaurant = (restaurant) => {
     if (savedRestaurants.indexOf(restaurant.camis) === -1) {
       savedRestaurants.push(restaurant.camis);
@@ -23,7 +23,7 @@ $(document).ready(() => {
 
   const gradePoints = function (points) {
     if (points <= 13)
-      return 'Estimated A';
+      return 'Not Graded. Estimated A';
     else if (points <= 27)
       return 'Estimated B';
     else if (points > 27)
@@ -41,7 +41,7 @@ $(document).ready(() => {
         <td scope="row"> ${restaurant.dba} </td>
         <td> ${restaurant.address} </td>
         <td> ${restaurant.inspection_date} </td>
-        <td> ${restaurant.grade ? restaurant.grade : gradePoints(restaurant.score)} </td>
+        <td> ${["A", "B", "C"].indexOf(restaurant.grade) != -1 ? restaurant.grade : "Not Graded. " + gradePoints(restaurant.score)}
         <td> ${restaurant.score ? restaurant.score : 'N/A'} </td>
         <td> <button type="button" class="btn ${saveMode ? 'btn-danger' : 'btn-primary'} btn-sm"> ${btnText} </button> </td>
       </tr>`
