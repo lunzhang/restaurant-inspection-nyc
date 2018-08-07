@@ -195,10 +195,11 @@ $(document).ready(() => {
       focus: function (event, ui) {
         $(".ui-helper-hidden-accessible").hide();
         event.preventDefault();
-      },
-      select: function (event, ui) {
-        $input.val(ui.item.value);
-        search();
+      }
+    });
+    $input.keyup(function(event) {
+      if (event.keyCode === 13) {
+        $searchBtn.click();
       }
     });
   });
