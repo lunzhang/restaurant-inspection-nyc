@@ -1,3 +1,5 @@
+const browserStorage = chrome.storage || storage;
+
 $(document).ready(() => {
   let savedRestaurants = [];
   const $input = $('#restaurant-das');
@@ -9,7 +11,7 @@ $(document).ready(() => {
     if (savedRestaurants.indexOf(restaurant.camis) === -1) {
       savedRestaurants.push(restaurant.camis);
       buildRestaurantList(restaurant, $savedRestaurantList);
-      chrome.storage.local.set({'restaurants': savedRestaurants});
+      browserStorage.local.set({'restaurants': savedRestaurants});
     }
   };
 
@@ -18,7 +20,7 @@ $(document).ready(() => {
     $savedRestaurantList.find(`#${restaurantId}`).remove();
     $savedRestaurantList.find(`.Delete${restaurantId}`).remove();
     savedRestaurants.splice(savedRestaurants.indexOf(restaurantId), 1);
-    chrome.storage.local.set({'restaurants': savedRestaurants});
+    browserStorage.local.set({'restaurants': savedRestaurants});
   };
 
   const gradePoints = function (points) {
@@ -109,7 +111,7 @@ $(document).ready(() => {
     });
   };
 
-  chrome.storage.local.get(['restaurants'], function (result) {
+  browserStorage.local.get(['restaurants'], function (result) {
     savedRestaurants = result.restaurants ? result.restaurants : [];
     savedRestaurants.forEach(id => {
       $.ajax({
