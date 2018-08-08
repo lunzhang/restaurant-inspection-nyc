@@ -134,6 +134,11 @@ $(document).ready(() => {
     });
   });
   $searchBtn.bind('click', search);
+  $input.keyup(function(event) {
+    if (event.keyCode === 13) {
+      search();
+    }
+  });
 
   const nameMap = {
     "21 Homes Kitchen": 41398041,
@@ -195,11 +200,6 @@ $(document).ready(() => {
       focus: function (event, ui) {
         $(".ui-helper-hidden-accessible").hide();
         event.preventDefault();
-      }
-    });
-    $input.keyup(function(event) {
-      if (event.keyCode === 13) {
-        $searchBtn.click();
       }
     });
   });
