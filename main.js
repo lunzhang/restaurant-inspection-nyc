@@ -79,8 +79,7 @@ $(document).ready(() => {
   const search = () => {
     $restaurantList.empty();
     const term = $input.val();
-    const query = nameMap[term] == null ? `$where=DBA%20like%20%22%25${term.toUpperCase()}%25%22`
-      : `camis=${nameMap[term]}`;
+    const query = `$where=DBA%20like%20%22%25${term.toUpperCase()}%25%22`;
     $.ajax({
       url: `https://data.cityofnewyork.us/resource/9w7m-hzhe.json?${query}`,
       success: function (violations) {
@@ -140,69 +139,5 @@ $(document).ready(() => {
     if (event.keyCode === 13) {
       search();
     }
-  });
-
-  const nameMap = {
-    "21 Homes Kitchen": 41398041,
-    "Abace Sushi": 50006214,
-    "Al Horno Lean Mexican (47th St)": 50010032,
-    "At Nine Thai": 50076881,
-    "Balade Your Way": 50047762,
-    "Bareburger": 50000763,
-    "BOI Noodle House": 41473278,
-    "Bon Chon Chicken": 50016964,
-    "Cafe China": 50072882,
-    "Chopt Creative Salad Co. (Empire State Building)": 50060390,
-    "Curry Dream": 41132647,
-    "Dallas BBQ": 41173328,
-    "Dig Inn": 41365576,
-    "Dim Sum Palace": 50051234,
-    "Dos Toros Taqueria": 50055078,
-    "Evergreen Shanghai Restaurant": 50014124,
-    "Good Seed Salad & Market": 50061189,
-    "Guy & Gallard": 40951884,
-    "Hale & Hearty Soups": 40959649,
-    "Happy Family Chinese and Japanese Restaurant": 41340002,
-    "Hestia": 50009921,
-    "Hummus & Pita Co.": 50016104,
-    "Indikitch": 50005876,
-    "Jerusalem Cafe": 41643561,
-    "Joy Curry & Tandoor": 41666656,
-    "Just Salad": 41235038,
-    "Kati Roll Company": 41272891,
-    "Kosher Deluxe": 40825868,
-    "Lenwich": 50049229,
-    "Let's Poke": 50075055,
-    "Little Italy Pizza": 41454913,
-    "Market Crates": 50041709,
-    "Meltshop": 50014853,
-    "Mulberry & Vine": 50047068,
-    "Mee Noodle Shop": 50034050,
-    "Natureworks": 41419773,
-    "Pinkberry - Hell's Kitchen": 50049034,
-    "Pokechan": 50057872,
-    "Piccolo Cafe": 41538666,
-    "Riko Peruvian": 50051650,
-    "Room Service": 50015344,
-    "Sophie's Cuban": 50055346,
-    "Tacos Time Square": 50060422,
-    "The Original Fresh Tortillas Grill": 50050765,
-    "Tio Pio": 41232741,
-    "Witchcraft": 50065815,
-  };
-
-  $(function () {
-    $input.autocomplete({
-      source: Object.keys(nameMap),
-      delay: 0,
-      messages: {
-        noResults: '',
-        results: function() {}
-      },
-      focus: function (event, ui) {
-        $(".ui-helper-hidden-accessible").hide();
-        event.preventDefault();
-      }
-    });
   });
 });
